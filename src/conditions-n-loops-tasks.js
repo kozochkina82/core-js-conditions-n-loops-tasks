@@ -69,8 +69,11 @@ function getMaxNumber(a, b, c) {
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  */
-function canQueenCaptureKing(/* queen, king */) {
-  throw new Error('Not implemented');
+function canQueenCaptureKing(queen, king) {
+  if (queen.y === king.y) return true;
+  if (queen.x === king.x) return true;
+  if (Math.abs(queen.x - king.x) === Math.abs(queen.y - king.y)) return true;
+  return false;
 }
 
 /**
@@ -91,8 +94,13 @@ function canQueenCaptureKing(/* queen, king */) {
  *  2, 2, 5   => false
  *  3, 0, 3   => false
  */
-function isIsoscelesTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isIsoscelesTriangle(a, b, c) {
+  if (a + b > c && a + c > b && b + c > a && a > 0 && b > 0 && c > 0) {
+    if (a === b || a === c || b === c) {
+      return true;
+    }
+  }
+  return false;
 }
 
 /**
@@ -109,8 +117,29 @@ function isIsoscelesTriangle(/* a, b, c */) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  throw new Error('Not implemented');
+function convertToRomanNumerals(num) {
+  const numsRoman = {
+    0: '',
+    1: 'I',
+    2: 'II',
+    3: 'III',
+    4: 'IV',
+    5: 'V',
+    6: 'VI',
+    7: 'VII',
+    8: 'VIII',
+    9: 'IX',
+  };
+  const tensRoman = {
+    0: '',
+    1: 'X',
+    2: 'XX',
+    3: 'XXX',
+  };
+  const firstNum = tensRoman[Math.trunc(num / 10)];
+  const secondNum = numsRoman[num % 10];
+  const numberRoman = firstNum + secondNum;
+  return numberRoman;
 }
 
 /**
@@ -128,8 +157,43 @@ function convertToRomanNumerals(/* num */) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  const digits = {
+    0: 'zero',
+    1: 'one',
+    2: 'two',
+    3: 'three',
+    4: 'four',
+    5: 'five',
+    6: 'six',
+    7: 'seven',
+    8: 'eight',
+    9: 'nine',
+  };
+  let result = '';
+  let i = 0;
+
+  if (numberStr[0] === '-') {
+    result = 'minus';
+    i = 1;
+  }
+
+  while (i < numberStr.length) {
+    const char = numberStr[i];
+
+    switch (char) {
+      case '.':
+      case ',':
+        if (result.length > 0) result += ' ';
+        result += 'point';
+        break;
+      default:
+        if (result.length > 0) result += ' ';
+        result += digits[+char];
+    }
+    i += 1;
+  }
+  return result;
 }
 
 /**
